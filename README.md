@@ -3,7 +3,8 @@
 [Claude Design 프로젝트](https://claude.ai/design/p/b53f7f4e-b0ff-4348-9262-0a2fc0bfb642)의
 `개발자 프로필.dc.html`(Design Canvas)을 빌드 도구 없이 동작하는 정적 사이트로 옮긴 결과물입니다.
 
-내용은 이력서 `2025 최종.pdf` 기준이며, GitHub Pages로 배포되어 있습니다.
+내용은 이력서 원문 `RESUME.md` 기준이며, GitHub Pages로 배포되어 있습니다.
+(`RESUME.md`는 개인정보가 들어 있어 저장소에 올리지 않고 로컬에만 둡니다.)
 👉 https://traumereiii.github.io/resume/
 
 ## 실행
