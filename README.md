@@ -55,10 +55,14 @@ js/app.js           렌더링 · 필터 · 모달 · 스크롤 애니메이션
 사이드카 파일에 저장하지만, 그 런타임 밖에서는 동작하지 않아 이렇게 바꿨습니다.)
 
 방문자마다 보이는 고정 이미지가 필요하다면 `src` 속성에 경로를 넣으면 됩니다.
+프로필 사진은 이 방식으로 `images/profile.jpg`를 지정해 두었습니다.
 
 ```html
-<image-slot id="profile-photo" shape="rect" src="./images/profile.jpg" placeholder="프로필 사진"></image-slot>
+<image-slot id="profile-photo" shape="rect" src="./images/profile.jpg" placeholder="서동성 프로필 사진"></image-slot>
 ```
+
+`images/profile.jpg`는 원본 사진을 프레임 비율(3:4)에 맞춰 상반신으로 자르고
+800×1067로 줄인 것입니다. 위치 정보 등 EXIF 메타데이터는 제거했습니다.
 
 ## 원본과 달라진 점
 

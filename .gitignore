@@ -7,6 +7,9 @@
 # 원본 이력서 파일 (개인정보 포함 — 저장소에 올리지 않음)
 *.pdf
 
+# 원본 프로필 사진 (크롭·압축본이 images/profile.jpg에 있음)
+/profile.jpg
+
 # OS 생성 파일
 .DS_Store
 Thumbs.db
