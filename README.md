@@ -1,0 +1,67 @@
+# 김지원 · 개발자 프로필 사이트
+
+[Claude Design 프로젝트](https://claude.ai/design/p/b53f7f4e-b0ff-4348-9262-0a2fc0bfb642)의
+`개발자 프로필.dc.html`(Design Canvas)을 빌드 도구 없이 동작하는 정적 사이트로 옮긴 결과물입니다.
+
+## 실행
+
+빌드 과정이 없습니다. `index.html`을 브라우저로 열면 바로 확인할 수 있고,
+로컬 서버로 띄우려면 아래 중 하나를 쓰면 됩니다.
+
+```bash
+python -m http.server 8000
+# 또는
+npx serve .
+```
+
+## 구조
+
+```
+index.html          화면 뼈대 (헤더·소개는 정적, 나머지는 데이터로 렌더링)
+css/style.css       전체 스타일 · 반응형
+js/data.js          프로필 데이터 (이 파일만 고치면 내용이 바뀝니다)
+js/image-slot.js    <image-slot> 커스텀 엘리먼트
+js/app.js           렌더링 · 필터 · 모달 · 스크롤 애니메이션
+```
+
+## 내용 수정
+
+모든 문구와 목록은 `js/data.js` 한 곳에 모여 있습니다.
+
+| 상수 | 내용 |
+| --- | --- |
+| `CONFIG` | 기술 스택 막대 표시 여부, 스크롤 애니메이션 사용 여부, 구직 상태 문구 |
+| `SKILLS` | 기술 스택 (`cat`은 `CATEGORIES`의 `id`, `pct`가 막대 길이) |
+| `CATEGORIES` | 기술 스택 필터 버튼 |
+| `WORK_PROJECTS` | 실무 프로젝트 |
+| `PROJECTS` | 사이드 프로젝트 |
+| `JOBS` | 경력 |
+
+이름·연락처·소개 문단·학력처럼 한 번만 쓰이는 항목은 `index.html`에 직접 적혀 있습니다.
+
+프로젝트 항목에서 `repo`, `live`를 빈 문자열로 두거나 `docs`를 빈 배열로 두면
+상세 모달에서 해당 영역이 통째로 빠집니다. (원본 Design Canvas의 `sc-if` 동작과 동일)
+
+## 이미지 슬롯
+
+프로필 사진과 프로젝트 스크린샷 자리는 `<image-slot>` 커스텀 엘리먼트입니다.
+클릭해서 파일을 고르거나 이미지를 끌어다 놓으면 채워지고, 채운 이미지는
+브라우저 `localStorage`에 저장돼 새로고침해도 남습니다. (원본은 omelette 런타임의
+사이드카 파일에 저장하지만, 그 런타임 밖에서는 동작하지 않아 이렇게 바꿨습니다.)
+
+방문자마다 보이는 고정 이미지가 필요하다면 `src` 속성에 경로를 넣으면 됩니다.
+
+```html
+<image-slot id="profile-photo" shape="rect" src="./images/profile.jpg" placeholder="프로필 사진"></image-slot>
+```
+
+## 원본과 달라진 점
+
+- Design Canvas 런타임(`support.js`, `sc-for`/`sc-if`/`{{ }}` 바인딩)을 걷어내고
+  바닐라 JS 렌더링으로 대체했습니다. 색상·간격·타이포그래피 값은 원본 그대로입니다.
+- 인라인 스타일과 `style-hover` 속성을 CSS 클래스로 옮겼습니다.
+- 원본은 고정 폭 캔버스 기준이라 브레이크포인트가 없어, 900px·560px 기준의
+  반응형 레이아웃을 새로 넣었습니다.
+- 모달에 `role="dialog"`, 포커스 복귀, 배경 스크롤 잠금을 추가했습니다.
+- 원본 스크립트에 남아 있던 문의 폼 상태(`setName`/`submit` 등)는 대응하는 마크업이
+  없어 옮기지 않았습니다.

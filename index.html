@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>김지원 · 백엔드 · 플랫폼 엔지니어</title>
+<meta name="description" content="결제와 데이터 파이프라인을 주로 다루는 백엔드 개발자 김지원의 프로필입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;900&family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+<!-- 스크립트가 동작할 때만 등장 애니메이션의 초기 상태를 적용해 깜빡임을 막습니다. -->
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- 상단 고정 바 -->
+<div class="topbar" aria-hidden="true"></div>
+
+<header class="section header">
+  <!-- 왼쪽: 프로필 사진 + 기본 정보 -->
+  <div class="header__aside" data-reveal>
+    <div class="photo">
+      <div class="photo__shadow" aria-hidden="true"></div>
+      <div class="photo__frame">
+        <image-slot id="profile-photo" shape="rect" placeholder="프로필 사진"></image-slot>
+      </div>
+    </div>
+
+    <dl class="meta">
+      <div class="meta__row"><dt>위치</dt><dd>서울, 대한민국 (원격 가능)</dd></div>
+      <div class="meta__row"><dt>경력</dt><dd>7년 · 2018년부터</dd></div>
+      <div class="meta__row"><dt>상태</dt><dd data-bind="availability"></dd></div>
+    </dl>
+
+    <div class="contact">
+      <div class="contact__label">Contact</div>
+      <a class="contact__link contact__link--strong" href="mailto:jiwon.kim@example.com">jiwon.kim@example.com</a>
+      <a class="contact__link" href="tel:+821012345678">010-1234-5678</a>
+      <a class="contact__link" href="https://github.com/jiwonkim" target="_blank" rel="noopener">github.com/jiwonkim</a>
+      <a class="contact__link" href="https://linkedin.com/in/jiwonkim" target="_blank" rel="noopener">linkedin.com/in/jiwonkim</a>
+    </div>
+  </div>
+
+  <!-- 오른쪽: 이름 + 소개 문단 -->
+  <div class="header__main" data-reveal>
+    <svg class="squiggle" width="150" height="34" viewBox="0 0 150 34" fill="none" aria-hidden="true">
+      <path d="M2 26c14-18 22 6 34-8s18 12 32-2 20 10 34-4 22 8 36-6" stroke="#1B2ED6" stroke-width="3" stroke-linecap="round" />
+    </svg>
+    <h1 class="name">김지원<span class="name__role">백엔드 · 플랫폼 엔지니어</span></h1>
+    <div class="rule" aria-hidden="true"></div>
+    <p class="lede">결제와 데이터 파이프라인을 주로 다루는 백엔드 개발자입니다. 트래픽이 몰리는 서비스에서 안정성과 응답 속도를 지키는 일, 그리고 운영 부담을 줄이는 구조를 설계하는 일을 합니다. 스타트업 3곳에서 초기 제품부터 월 500만 요청 규모까지 운영해 왔습니다.</p>
+  </div>
+</header>
+
+<!-- 소개 -->
+<section id="about" class="section about" data-reveal>
+  <div class="grid">
+    <h2 class="eyebrow">소개</h2>
+    <div class="about__grid">
+      <div class="about__item">
+        <div class="about__title">일하는 방식</div>
+        <p>요구사항을 먼저 좁히고, 측정 가능한 목표를 정한 뒤 구현합니다. 문서와 테스트를 남겨 인수인계가 쉬운 코드를 만듭니다.</p>
+      </div>
+      <div class="about__item">
+        <div class="about__title">주로 맡는 일</div>
+        <p>API 설계와 리팩터링, 결제·정산 연동, 데이터 수집 및 배치 파이프라인, 클라우드 인프라 구성과 비용 최적화.</p>
+      </div>
+      <div class="about__item">
+        <div class="about__title">협업</div>
+        <p>기획·디자인과 초기 단계부터 함께 범위를 조정합니다. 주 1회 진행 상황 공유, 이슈는 발생 즉시 공유합니다.</p>
+      </div>
+      <div class="about__item">
+        <div class="about__title">학력</div>
+        <p>2014 – 2018 · 한국대학교 컴퓨터공학 학사</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 경력 -->
+<section id="experience" class="experience">
+  <div class="section grid" data-reveal>
+    <h2 class="eyebrow eyebrow--invert">경력</h2>
+    <div class="jobs" data-list="jobs"></div>
+  </div>
+</section>
+
+<!-- 기술 스택 -->
+<section id="skills" class="section" data-reveal>
+  <div class="grid">
+    <div class="skills__aside">
+      <h2 class="eyebrow">기술 스택</h2>
+      <div class="chips" data-list="categories"></div>
+      <p class="note">막대는 실무에서 주도적으로 다뤄 본 정도를 나타냅니다.</p>
+    </div>
+    <div class="skills" data-list="skills"></div>
+  </div>
+</section>
+
+<!-- 프로젝트 -->
+<section id="work-projects" class="section section--tight" data-reveal>
+  <div class="grid">
+    <h2 class="eyebrow">프로젝트</h2>
+    <div class="cards" data-list="workProjects"></div>
+  </div>
+</section>
+
+<!-- 사이드 프로젝트 -->
+<section id="projects" class="section section--tight section--last" data-reveal>
+  <div class="grid">
+    <h2 class="eyebrow">사이드 프로젝트</h2>
+    <div class="cards" data-list="projects"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© 2026 김지원</span>
+  <a href="mailto:jiwon.kim@example.com">jiwon.kim@example.com</a>
+</footer>
+
+<!-- 프로젝트 상세 모달 (열릴 때 채워짐) -->
+<div class="modal" id="modal" hidden>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modal-title"></div>
+</div>
+
+<script src="./js/data.js"></script>
+<script src="./js/image-slot.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>

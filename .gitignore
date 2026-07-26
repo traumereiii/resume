@@ -1,0 +1,9 @@
+# IDE 설정
+.idea/
+
+# 로컬 MCP 서버 설정
+.mcp.json
+
+# OS 생성 파일
+.DS_Store
+Thumbs.db
