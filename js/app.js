@@ -96,6 +96,8 @@
 
   function renderCards(selector, items) {
     const container = $(selector);
+    if (!container) return;  // 해당 섹션을 쓰지 않는 페이지에서는 건너뜁니다.
+
     container.innerHTML = items.map((project, index) => `
       <button type="button" class="card" data-index="${index}">
         <span class="card__top">
@@ -118,7 +120,6 @@
   }
 
   renderCards('[data-list="workProjects"]', WORK_PROJECTS);
-  renderCards('[data-list="projects"]', PROJECTS);
 
   /* ---------- 프로젝트 상세 모달 ---------- */
 
@@ -163,7 +164,7 @@
             </div>
           </div>` : ''}
         <div class="block">
-          <div class="block__label">성과</div>
+          <div class="block__label">주요 작업</div>
           <ul class="results">
             ${project.results.map((result) => `<li>${esc(result)}</li>`).join('')}
           </ul>

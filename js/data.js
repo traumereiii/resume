@@ -1,26 +1,36 @@
 /* =========================================================
    프로필 데이터
    여기만 고치면 화면 전체가 바뀝니다. (마크업 수정 불필요)
+   내용은 이력서 `2025 최종.pdf` 기준입니다.
    ========================================================= */
 
 // 화면 동작 옵션 — 원본 Design Canvas의 props에 대응합니다.
 const CONFIG = {
-  showSkillBars: true,   // 기술 스택 막대 표시 여부
+  // 숙련도 막대는 객관적 근거가 없어 꺼 두었습니다.
+  // 켜려면 true로 바꾸고 아래 SKILLS의 pct 값을 직접 조정하세요.
+  showSkillBars: false,
   revealOnScroll: true,  // 스크롤 시 섹션 등장 애니메이션
-  availability: '2026년 3분기 프로젝트 논의 가능'
+  availability: '세이프디 재직 중'
 };
 
 const SKILLS = [
-  { name: 'Java · Spring Boot', cat: 'backend', pct: 95, note: '주력' },
-  { name: 'Kotlin', cat: 'backend', pct: 80, note: '실무 2년' },
-  { name: 'Python', cat: 'backend', pct: 75, note: '배치 · 스크립트' },
-  { name: 'PostgreSQL · MySQL', cat: 'data', pct: 90, note: '설계 · 튜닝' },
-  { name: 'Kafka', cat: 'data', pct: 78, note: '이벤트 파이프라인' },
-  { name: 'Redis', cat: 'data', pct: 82, note: '캐시 · 큐' },
-  { name: 'AWS (ECS, RDS, S3)', cat: 'infra', pct: 85, note: '운영' },
-  { name: 'Terraform', cat: 'infra', pct: 70, note: 'IaC' },
-  { name: 'Docker · GitHub Actions', cat: 'infra', pct: 88, note: 'CI/CD' },
-  { name: 'TypeScript · React', cat: 'frontend', pct: 65, note: '보조' }
+  { name: 'Java · Spring Boot', cat: 'backend', pct: 90, note: '주력' },
+  { name: 'Spring Framework', cat: 'backend', pct: 85, note: '레거시 운영 · 리팩터링' },
+  { name: 'JPA', cat: 'backend', pct: 75, note: '데이터 접근' },
+  { name: 'Kotlin', cat: 'backend', pct: 65, note: '보유 기술' },
+  { name: 'Node.js · Puppeteer', cat: 'backend', pct: 90, note: '데이터 수집' },
+  { name: 'Nest.js · TypeScript', cat: 'backend', pct: 70, note: '실무 도입' },
+  { name: 'JavaScript', cat: 'backend', pct: 85, note: '수집 · 스크립트' },
+  { name: 'Oracle', cat: 'data', pct: 75, note: '보유 기술' },
+  { name: 'MySQL', cat: 'data', pct: 80, note: '보유 기술' },
+  { name: 'Redis', cat: 'data', pct: 70, note: '세션 캐시' },
+  { name: '메시지 큐', cat: 'data', pct: 70, note: '대용량 데이터 연동' },
+  { name: 'Microsoft Azure · AKS', cat: 'infra', pct: 65, note: 'Kubernetes 배포 환경' },
+  { name: 'Prometheus · Grafana · Loki', cat: 'infra', pct: 75, note: '모니터링 · 로그 수집' },
+  { name: 'CI/CD (Tomcat · Apache)', cat: 'infra', pct: 75, note: '무중단 자동 배포' },
+  { name: 'Git · GitHub', cat: 'infra', pct: 85, note: '형상 관리' },
+  { name: 'Vue.js', cat: 'frontend', pct: 60, note: '보유 기술' },
+  { name: 'HTML', cat: 'frontend', pct: 70, note: '보유 기술' }
 ];
 
 const CATEGORIES = [
@@ -34,159 +44,232 @@ const CATEGORIES = [
 const WORK_PROJECTS = [
   {
     slotId: 'work-1',
-    year: '2025',
-    period: '2025.02 – 2025.09 · 8개월',
-    title: '구독 결제 정산 시스템',
-    role: '백엔드 리드',
-    summary: '월 12만 건 구독 결제의 청구·환불·정산을 처리하는 시스템을 새로 설계했습니다.',
-    detail: '기존 단일 서비스에 얽혀 있던 결제 로직을 분리해 별도 도메인으로 재구성했습니다. 청구 주기 계산, 부분 환불, 대금 정산을 각각 독립된 워크플로로 나누고 이벤트 기반으로 연결해 실패 지점을 좁혔습니다. 이중 청구를 막기 위한 멱등 키 체계와 대장 기반 대조 배치를 함께 도입했습니다.',
-    results: ['결제 실패 재처리 자동화로 CS 문의 41% 감소', '정산 마감 소요 시간 6시간 → 40분', '이중 청구 사고 0건 유지 (12개월)'],
-    stack: ['Kotlin', 'Spring Boot', 'Kafka', 'PostgreSQL'],
+    year: '2024',
+    period: '2024.08 – 2024.09 · 2개월',
+    title: '무중단 자동 배포 CI/CD 구축',
+    role: '세이프디',
+    summary: '톰캣 환경에 무중단으로 자동 배포하기 위한 CI/CD를 구축했습니다.',
+    detail: '톰캣 환경에 무중단으로 자동 배포하기 위한 CI/CD를 구축했습니다. 빌드 단계에서 실패하면 배포로 넘어가지 않도록 막고, 배포가 성공하면 Apache의 포트를 자동으로 전환하도록 구현해 배포 중에도 요청이 끊기지 않도록 했습니다.',
+    results: [
+      '빌드 실패 시 배포 중단 기능 구현',
+      '배포 성공 시 자동으로 Apache 포트 변경 기능 구현'
+    ],
+    stack: ['Tomcat', 'Apache', 'CI/CD'],
     repo: '', live: '', docs: []
   },
   {
     slotId: 'work-2',
     year: '2024',
-    period: '2024.01 – 2024.06 · 6개월',
-    title: '실시간 재고 동기화 API',
-    role: '백엔드 개발',
-    summary: '여러 물류 창고와 오픈마켓 사이의 재고 수치를 초 단위로 맞추는 API를 만들었습니다.',
-    detail: '창고 시스템 4곳과 오픈마켓 3곳의 서로 다른 갱신 주기를 흡수하는 중간 계층을 두었습니다. 변경 이벤트를 스트림으로 받아 병합하고, 판매 채널에는 변경분만 밀어 넣는 방식으로 호출량을 줄였습니다. 재고 음수 방지를 위해 예약 수량 개념을 도입했습니다.',
-    results: ['품절 주문 취소율 2.8% → 0.4%', '외부 API 호출량 63% 절감', 'p99 응답 시간 180ms 유지'],
-    stack: ['Java', 'Spring Boot', 'Redis', 'AWS ECS'],
+    period: '2024.08 · 1개월',
+    title: 'Redis를 활용한 세션 캐싱',
+    role: '세이프디',
+    summary: '인메모리로 관리하던 세션을 외부 캐시로 옮겨 배포 후에도 로그인 상태가 유지되도록 했습니다.',
+    detail: '애플리케이션 메모리에 두던 세션을 외부 캐시(Redis)에 저장하도록 구성했습니다. 세션이 애플리케이션과 분리되면서 배포로 인스턴스가 재기동되어도 사용자가 다시 로그인할 필요가 없어졌습니다.',
+    results: [
+      '인메모리로 관리하던 세션을 외부 캐시(Redis)에 저장하도록 구성',
+      '애플리케이션 배포 후에도 로그인 상태 유지'
+    ],
+    stack: ['Redis'],
     repo: '', live: '', docs: []
   },
   {
     slotId: 'work-3',
-    year: '2023',
-    period: '2023.05 – 2023.08 · 4개월',
-    title: '데이터 수집 파이프라인 재구축',
-    role: '단독 개발',
-    summary: '매일 흩어진 소스 20여 곳의 데이터를 모으는 배치를 관리 가능한 구조로 옮겼습니다.',
-    detail: '크론과 수동 스크립트로 운영되던 수집 작업을 워크플로 엔진으로 이관했습니다. 소스별 어댑터를 규격화해 새 소스 추가를 반나절 작업으로 줄였고, 실패한 작업만 선택적으로 재실행할 수 있도록 했습니다.',
-    results: ['야간 배치 실패 대응 시간 평균 3시간 → 20분', '신규 소스 연동 리드타임 5일 → 0.5일', '저장 비용 30% 절감'],
-    stack: ['Python', 'Airflow', 'S3', 'Terraform'],
+    year: '2024',
+    period: '2024.03 · 1개월',
+    title: '모니터링 시스템 구축',
+    role: '세이프디',
+    summary: '시스템 리소스와 애플리케이션 로그를 수집해 한곳에서 확인할 수 있는 모니터링 환경을 만들었습니다.',
+    detail: 'Node Exporter로 서버 리소스 지표를 노출하고 Prometheus로 수집해 Grafana 대시보드에 시각화했습니다. 애플리케이션 로그는 Loki로 모아 같은 Grafana에서 지표와 함께 확인할 수 있도록 구성했습니다.',
+    results: [
+      'Node Exporter, Prometheus, Grafana를 활용해 시스템 리소스 수집 후 시각화',
+      'Loki, Grafana를 활용해 애플리케이션 로그 수집 후 시각화'
+    ],
+    stack: ['Node Exporter', 'Prometheus', 'Grafana', 'Loki'],
     repo: '', live: '', docs: []
   },
   {
     slotId: 'work-4',
-    year: '2022',
-    period: '2022.03 – 2022.11 · 9개월',
-    title: '사내 운영 어드민 개편',
-    role: '풀스택 개발',
-    summary: 'CS·물류팀이 매일 쓰는 어드민을 권한 모델부터 다시 설계했습니다.',
-    detail: '팀별로 흩어진 6개 도구를 하나의 어드민으로 통합하고, 역할 기반 권한과 감사 로그를 도입했습니다. 자주 쓰는 조회 화면은 서버 사이드 페이징과 저장 필터로 다시 만들었습니다.',
-    results: ['주문 처리 화면 평균 조작 단계 9 → 4', '권한 관련 수동 요청 주 30건 → 2건', '전 작업 감사 로그 확보'],
-    stack: ['TypeScript', 'React', 'Spring Boot', 'MySQL'],
+    year: '2023',
+    period: '2023.10 – 2023.12 · 3개월',
+    title: '레거시 리팩토링',
+    role: '세이프디',
+    summary: '분류되지 않은 기존 레거시 코드를 화면과 도메인 단위로 나누고 공통 코드를 정리했습니다.',
+    detail: '구조가 잡히지 않은 채 쌓여 있던 레거시 코드를 화면별·도메인별로 분리했습니다. 여러 곳에 흩어져 중복되던 로직은 공통 코드로 묶어 정리했습니다.',
+    results: [
+      '분류되지 않은 기존 레거시 코드를 화면 & 도메인 별로 분리',
+      '공통 코드 작업'
+    ],
+    stack: [],
     repo: '', live: '', docs: []
-  }
-];
-
-const PROJECTS = [
-  {
-    slotId: 'proj-1',
-    year: '2026',
-    period: '2026.04 – 2026.06 · 3개월',
-    title: '가계부 API 서버 (연습)',
-    role: '개인 연습 · 단독',
-    kind: '연습 프로젝트',
-    summary: '지출 기록과 월별 통계를 다루는 REST API를 처음부터 설계해 본 연습 프로젝트입니다.',
-    detail: '실무에서 자주 마주치는 도메인을 골라 요구사항 정의부터 스스로 해봤습니다. 카테고리·반복 지출·예산 초과 알림까지 범위를 정하고, 엔티티 설계와 트랜잭션 경계를 여러 번 고쳐가며 정리했습니다. 테스트는 통합 테스트 중심으로 작성했습니다.',
-    results: ['도메인 모델 3회 리팩터링 기록을 문서로 남김', '통합 테스트 62개 · 커버리지 81%', 'GitHub Actions로 PR마다 테스트 자동 실행'],
-    stack: ['Kotlin', 'Spring Boot', 'PostgreSQL', 'JUnit5'],
-    repo: 'https://github.com/jiwonkim/budget-api',
-    live: 'https://budget-api.example.dev/swagger',
-    docs: [
-      { label: '요구사항 정의서', href: '#' },
-      { label: 'ERD · API 명세', href: '#' },
-      { label: '회고 노트', href: '#' }
-    ]
   },
   {
-    slotId: 'proj-2',
-    year: '2026',
-    period: '2026.01 – 2026.03 · 3개월',
-    title: '실시간 채팅 서버 (연습)',
-    role: '개인 연습 · 단독',
-    kind: '연습 프로젝트',
-    summary: 'WebSocket과 메시지 브로커를 직접 다뤄 보기 위해 만든 소규모 채팅 서버입니다.',
-    detail: '다중 서버 환경에서 메시지가 유실되지 않는지 확인하는 것이 목표였습니다. 세션을 Redis에 두고 발행·구독으로 서버 간 브로드캐스트를 붙였습니다. 재접속 시 미수신 메시지를 되돌려주는 커서 방식도 실험했습니다.',
-    results: ['서버 2대 환경에서 메시지 유실 0건 확인', '동시 접속 500 커넥션 부하 테스트 통과', '재접속 시 미수신 메시지 복구 구현'],
-    stack: ['Java', 'Spring WebSocket', 'Redis Pub/Sub', 'Docker'],
-    repo: 'https://github.com/jiwonkim/chat-lab',
-    live: 'https://chat-lab.example.dev',
-    docs: [
-      { label: '요구사항 정의서', href: '#' },
-      { label: '아키텍처 문서', href: '#' },
-      { label: '부하 테스트 결과', href: '#' }
-    ]
+    slotId: 'work-5',
+    year: '2023',
+    period: '2022.12 – 2023.07 · 8개월',
+    title: '크레딧 & 지불 시스템 개발',
+    role: '(주)트레드링스',
+    summary: '서비스 확장을 위해 사내 서비스들이 공통으로 사용할 크레딧과 지불 시스템을 개발했습니다.',
+    detail: '사내 서비스들이 각자 다루던 재화를 하나로 묶기 위해 공통 크레딧을 설계하고 개발했습니다. 이 크레딧을 실제로 차감하고 처리하는 지불 시스템도 함께 만들었습니다.',
+    results: [
+      '사내 서비스들 간에 공통으로 사용할 공통 크레딧 개발',
+      '공통 크레딧에 대한 지불 시스템 개발'
+    ],
+    stack: [],
+    repo: '', live: '', docs: []
   },
   {
-    slotId: 'proj-3',
-    year: '2025',
-    period: '2025.09 – 2025.11 · 3개월',
-    title: '채용 공고 수집 크롤러 (연습)',
-    role: '개인 연습 · 단독',
-    kind: '연습 프로젝트',
-    summary: '여러 채용 사이트의 공고를 모아 조건에 맞는 것만 알려주는 배치 파이프라인 연습입니다.',
-    detail: '수집·정제·알림 세 단계를 나누고 스케줄러로 묶었습니다. 사이트별 파서를 어댑터로 분리해 새 사이트 추가 비용을 줄이는 구조를 연습했고, 중복 공고 판정 로직을 여러 방식으로 비교해 봤습니다.',
-    results: ['사이트 5곳 수집 · 신규 사이트 추가 1시간 내', '중복 공고 판정 정확도 96%', '매일 오전 슬랙으로 요약 알림 발송'],
-    stack: ['Python', 'Airflow', 'SQLite', 'Slack API'],
-    repo: 'https://github.com/jiwonkim/job-crawler',
-    live: '',
-    docs: [
-      { label: '요구사항 정의서', href: '#' },
-      { label: '파서 설계 메모', href: '#' }
-    ]
+    slotId: 'work-6',
+    year: '2022',
+    period: '2022.04 – 2022.10 · 7개월',
+    title: 'ShipGo 모니터링 시스템',
+    role: '(주)트레드링스',
+    summary: '서비스 운영을 위한 모니터링 툴을 개발했습니다.',
+    detail: '데이터 파이프라인이 정상적으로 동작하는지, 수집된 데이터가 제대로 들어왔는지 운영자가 직접 확인할 수 있는 도구를 개발했습니다. 배포 과정도 함께 자동화했습니다.',
+    results: [
+      '파이프라인 별 데이터 확인',
+      '수집 데이터 확인',
+      '배포 자동화'
+    ],
+    stack: [],
+    repo: '', live: '', docs: []
   },
   {
-    slotId: 'proj-4',
-    year: '2025',
-    period: '2025.06 – 2025.08 · 3개월',
-    title: '할 일 관리 웹앱 (연습)',
-    role: '개인 연습 · 단독',
-    kind: '연습 프로젝트',
-    summary: '프론트엔드 감각을 익히기 위해 백엔드부터 화면까지 혼자 만들어 본 작은 웹앱입니다.',
-    detail: '인증, 낙관적 업데이트, 오프라인 임시 저장까지 직접 붙여봤습니다. 화면 상태와 서버 상태를 분리하는 방법을 연습하는 데 초점을 맞췄고, 배포는 컨테이너 이미지로 자동화했습니다.',
-    results: ['로그인·할 일 CRUD·태그 필터 구현', '오프라인 입력 후 재접속 시 자동 동기화', '커밋마다 자동 빌드·배포 파이프라인 구성'],
-    stack: ['TypeScript', 'React', 'Spring Boot', 'MySQL'],
-    repo: 'https://github.com/jiwonkim/todo-practice',
-    live: 'https://todo-practice.example.dev',
-    docs: [
-      { label: '요구사항 정의서', href: '#' },
-      { label: '화면 설계서', href: '#' }
-    ]
+    slotId: 'work-7',
+    year: '2021',
+    period: '2021.04 – 2021.12 · 9개월',
+    title: 'ShipGo 서비스 확장',
+    role: '(주)트레드링스',
+    summary: '운영 중인 서비스의 데이터 수집 및 활용 범위를 확장했습니다.',
+    detail: '수집 범위를 넓히기 위해 약 40개에 이르는 데이터 수집 모듈의 로직을 수정하고 구조를 개선했습니다. 수집 파이프라인의 로직도 함께 손봤고, 확장된 데이터를 외부에 제공하기 위한 API를 개발했습니다.',
+    results: [
+      '데이터 수집 모듈(약 40개)의 수집 로직 수정 및 구조 개선',
+      '데이터 수집 파이프라인의 로직 수정',
+      '확장된 데이터를 제공하기 위한 API 개발'
+    ],
+    stack: [],
+    repo: '', live: '', docs: []
+  },
+  {
+    slotId: 'work-8',
+    year: '2021',
+    period: '2021.01 – 2021.04 · 4개월',
+    title: '에러 메세지 로깅 시스템',
+    role: '(주)트레드링스',
+    summary: '운영 중인 모든 서비스에서 발생하는 오류를 한곳에 수집하는 시스템을 만들었습니다.',
+    detail: '서비스마다 제각각이던 오류 처리를 공통 로직으로 통일하고, 발생한 에러 메세지를 받아 처리하는 이벤트 핸들러를 추가해 오류를 한곳에 모았습니다.',
+    results: [
+      '운영중인 모든 서비스에 공통 에러 처리 로직 추가',
+      '에러 메세지를 처리하는 이벤트 핸들러 추가'
+    ],
+    stack: [],
+    repo: '', live: '', docs: []
+  },
+  {
+    slotId: 'work-9',
+    year: '2020',
+    period: '2020.09 – 2020.12 · 4개월',
+    title: '외부 기업과 데이터 연동을 위한 API 개발',
+    role: '(주)트레드링스',
+    summary: '국내 모 선사와 MOU를 체결해 데이터를 상호간에 주고받기 위한 API를 개발했습니다.',
+    detail: '국내 모 선사와 MOU를 체결하여 데이터를 상호간에 주고 받기로 하면서, 자사 보유 데이터를 제공하는 API와 거래 업체의 데이터를 전달받는 API를 함께 개발했습니다. 메세지 큐를 활용해 대용량 데이터도 유실 없이 처리할 수 있도록 했습니다.',
+    results: [
+      '자사 보유 데이터를 제공하기 위한 API 개발',
+      '거래 업체의 데이터를 전달 받기 위한 API 개발',
+      '메세지 큐를 활용하여 대용량 데이터에 대해 유실 없이 처리 가능'
+    ],
+    stack: ['메시지 큐'],
+    repo: '', live: '', docs: []
+  },
+  {
+    slotId: 'work-10',
+    year: '2020',
+    period: '2020.02 – 2020.08 · 7개월',
+    title: '데이터 수집 프로그램 개발',
+    role: '(주)트레드링스',
+    summary: '서비스 운영에 필요한 데이터 수집을 자동화해주는 프로그램을 개발했습니다.',
+    detail: 'Node.js와 Puppeteer를 활용해 서비스 운영에 필요한 데이터를 자동으로 수집하는 프로그램을 개발했습니다.',
+    results: [
+      '서비스 운영에 필요한 데이터 수집 자동화',
+      'Node.js, Puppeteer 활용'
+    ],
+    stack: ['Node.js', 'Puppeteer'],
+    repo: '', live: '', docs: []
+  },
+  {
+    slotId: 'work-11',
+    year: '2019',
+    period: '2019.04 – 2020.01 · 10개월',
+    title: 'SK Hynix EAI',
+    role: '(주)이포즌',
+    summary: 'MES 시스템 간의 데이터 연동을 담당하는 EAI 시스템을 개발하고 유지보수했습니다.',
+    detail: 'SK Hynix 이천 공장 RnD 센터에서 근무하며 MES 시스템간의 데이터 연동을 담당하는 EAI 시스템을 개발 및 유지보수했습니다.',
+    results: [
+      'MES 시스템 간 데이터 연동을 담당하는 EAI 시스템 개발',
+      'EAI 시스템 유지보수'
+    ],
+    stack: ['EAI', 'MES'],
+    repo: '', live: '', docs: []
+  },
+  {
+    slotId: 'work-12',
+    year: '2017',
+    period: '2017.08 – 2018.12 · 1년 5개월',
+    title: 'TANGO',
+    role: '(주)이나우테크놀로지',
+    summary: 'SKT TANGO(5G 전환 사업)의 프로젝트 모듈을 개발했습니다.',
+    detail: 'SKT의 5G 전환 사업인 TANGO 프로젝트에 참여해 프로젝트 모듈을 개발했습니다.',
+    results: [
+      'SKT TANGO(5G 전환 사업)의 프로젝트 모듈 개발'
+    ],
+    stack: [],
+    repo: '', live: '', docs: []
   }
 ];
 
 const JOBS = [
   {
-    period: '2023 – 현재',
-    role: '시니어 백엔드 엔지니어',
-    company: '페이먼트랩 (핀테크 · 30명)',
+    period: '2024.07 – 현재',
+    role: '백엔드 개발 · 정규직',
+    company: '세이프디 (2년 1개월)',
     points: [
-      '구독 결제 도메인을 분리 설계하고 정산 시스템 전체를 재구축했습니다.',
-      '주니어 3명의 코드 리뷰와 온보딩을 담당하며 리뷰 응답 기준을 세웠습니다.',
-      '장애 대응 프로세스를 문서화해 평균 복구 시간을 절반으로 줄였습니다.'
+      'Node Exporter·Prometheus·Grafana·Loki로 시스템 리소스와 애플리케이션 로그를 수집·시각화하는 모니터링 환경을 구축했습니다.',
+      '톰캣 환경에 무중단으로 자동 배포하는 CI/CD를 구축했습니다.',
+      '인메모리로 관리하던 세션을 Redis로 옮겨 배포 후에도 로그인 상태가 유지되도록 했습니다.'
     ]
   },
   {
-    period: '2020 – 2023',
-    role: '백엔드 엔지니어',
-    company: '커머스브릿지 (이커머스 SaaS)',
+    period: '2023.10 – 2024.06',
+    role: '백엔드 개발 · 정규직',
+    company: '세이프디 (9개월)',
     points: [
-      '재고·주문 API를 담당하며 월 500만 요청 규모의 트래픽을 운영했습니다.',
-      '데이터 수집 파이프라인을 워크플로 엔진으로 이관해 운영 부담을 줄였습니다.',
-      '사내 운영 어드민을 풀스택으로 개편했습니다.'
+      '분류되지 않은 기존 레거시 코드를 화면·도메인 단위로 분리했습니다.',
+      '흩어져 중복되던 로직을 공통 코드로 정리했습니다.'
     ]
   },
   {
-    period: '2018 – 2020',
-    role: '소프트웨어 엔지니어',
-    company: '노드스튜디오 (수탁 개발)',
+    period: '2020.02 – 2023.07',
+    role: '백엔드 개발',
+    company: '(주)트레드링스 (3년 6개월)',
     points: [
-      '클라이언트 12곳의 웹 서비스 백엔드를 구축하고 인수인계했습니다.',
-      '반복되는 초기 설정을 사내 스캐폴딩으로 정리해 착수 기간을 단축했습니다.'
+      '사내 서비스들이 공통으로 사용할 크레딧과 그에 대한 지불 시스템을 개발했습니다.',
+      'Node.js·Puppeteer 기반 데이터 수집 프로그램을 만들고, 수집 모듈 약 40개의 로직과 구조를 개선했습니다.',
+      '외부 기업과의 데이터 연동 API, 공통 에러 로깅 시스템, 서비스 운영용 모니터링 툴을 개발했습니다.'
+    ]
+  },
+  {
+    period: '2019.04 – 2020.02',
+    role: 'EAI 시스템 개발 · 유지보수',
+    company: '(주)이포즌 (11개월)',
+    points: [
+      'SK Hynix 이천 공장 RnD 센터에서 근무하며 MES 시스템 간의 데이터 연동을 담당하는 EAI 시스템을 개발하고 유지보수했습니다.'
+    ]
+  },
+  {
+    period: '2017.08 – 2019.02',
+    role: '프로젝트 모듈 개발',
+    company: '(주)이나우테크놀로지 (1년 7개월)',
+    points: [
+      'SKT TANGO(5G 전환 사업)의 프로젝트 모듈을 개발했습니다.'
     ]
   }
 ];

@@ -1,7 +1,10 @@
-# 김지원 · 개발자 프로필 사이트
+# 서동성 · 개발자 프로필 사이트
 
 [Claude Design 프로젝트](https://claude.ai/design/p/b53f7f4e-b0ff-4348-9262-0a2fc0bfb642)의
 `개발자 프로필.dc.html`(Design Canvas)을 빌드 도구 없이 동작하는 정적 사이트로 옮긴 결과물입니다.
+
+내용은 이력서 `2025 최종.pdf` 기준이며, GitHub Pages로 배포되어 있습니다.
+👉 https://traumereiii.github.io/resume/
 
 ## 실행
 
@@ -33,11 +36,13 @@ js/app.js           렌더링 · 필터 · 모달 · 스크롤 애니메이션
 | `CONFIG` | 기술 스택 막대 표시 여부, 스크롤 애니메이션 사용 여부, 구직 상태 문구 |
 | `SKILLS` | 기술 스택 (`cat`은 `CATEGORIES`의 `id`, `pct`가 막대 길이) |
 | `CATEGORIES` | 기술 스택 필터 버튼 |
-| `WORK_PROJECTS` | 실무 프로젝트 |
-| `PROJECTS` | 사이드 프로젝트 |
+| `WORK_PROJECTS` | 프로젝트 |
 | `JOBS` | 경력 |
 
-이름·연락처·소개 문단·학력처럼 한 번만 쓰이는 항목은 `index.html`에 직접 적혀 있습니다.
+이름·연락처·소개 문단·학력·자격증처럼 한 번만 쓰이는 항목은 `index.html`에 직접 적혀 있습니다.
+
+기술 숙련도 막대(`CONFIG.showSkillBars`)는 객관적 근거가 없어 꺼 두었습니다.
+켜려면 `true`로 바꾸고 `SKILLS`의 `pct` 값을 직접 조정하면 됩니다.
 
 프로젝트 항목에서 `repo`, `live`를 빈 문자열로 두거나 `docs`를 빈 배열로 두면
 상세 모달에서 해당 영역이 통째로 빠집니다. (원본 Design Canvas의 `sc-if` 동작과 동일)

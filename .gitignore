@@ -4,6 +4,9 @@
 # 로컬 MCP 서버 설정
 .mcp.json
 
+# 원본 이력서 파일 (개인정보 포함 — 저장소에 올리지 않음)
+*.pdf
+
 # OS 생성 파일
 .DS_Store
 Thumbs.db
