@@ -23,24 +23,14 @@
   const tagsHtml = (stack) =>
     (stack || []).map((tag) => `<span class="tag">${esc(tag)}</span>`).join('');
 
-  /* ---------- 기본 텍스트 바인딩 ---------- */
-
-  const availability = $('[data-bind="availability"]');
-  if (availability) availability.textContent = CONFIG.availability;
-
   /* ---------- 경력 ---------- */
 
   $('[data-list="jobs"]').innerHTML = JOBS.map((job) => `
     <article class="job">
       <div class="job__period">${esc(job.period)}</div>
       <div class="job__body">
-        <div>
-          <div class="job__role">${esc(job.role)}</div>
-          <div class="job__company">${esc(job.company)}</div>
-        </div>
-        <ul class="job__points">
-          ${job.points.map((point) => `<li>${esc(point)}</li>`).join('')}
-        </ul>
+        <div class="job__role">${esc(job.role)}</div>
+        <div class="job__company">${esc(job.company)}</div>
       </div>
     </article>
   `).join('');

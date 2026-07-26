@@ -153,26 +153,14 @@ img { max-width: 100%; }
   inset: 0;
 }
 
-/* 위치 / 경력 / 상태 */
-.meta {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 16px;
-  font-size: 14px;
-  color: var(--ink-80);
-}
-.meta__row { display: flex; gap: 10px; }
-.meta dt { color: var(--blue); font-weight: 700; }
-.meta dd { margin: 0; }
-
-/* 연락처 */
+/* 연락처 — 사진 바로 아래에 오므로 구분선이 사진 그림자(아래로 14px)에
+   붙지 않도록 margin으로 띄웁니다. */
 .contact {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-top: 6px;
+  margin-top: 14px;
+  padding-top: 12px;
   border-top: 2px solid var(--blue-25);
   font-size: 14px;
 }
@@ -258,13 +246,13 @@ img { max-width: 100%; }
 .jobs {
   display: flex;
   flex-direction: column;
-  gap: 44px;
+  gap: 26px;
 }
 .job {
   display: grid;
   grid-template-columns: 140px 1fr;
   gap: 28px;
-  padding-bottom: 40px;
+  padding-bottom: 22px;
   border-bottom: 1px solid var(--cream-28);
 }
 .job__period {
@@ -277,7 +265,7 @@ img { max-width: 100%; }
 .job__body {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 4px;
 }
 .job__role {
   font-size: 21px;
@@ -288,17 +276,6 @@ img { max-width: 100%; }
   font-size: 15px;
   font-style: italic;
   color: var(--cream-70);
-  margin-top: 4px;
-}
-.job__points {
-  margin: 0;
-  padding-left: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--cream-90);
 }
 
 /* ---------- 기술 스택 ---------- */
