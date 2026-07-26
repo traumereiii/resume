@@ -6,38 +6,34 @@
 
 // 화면 동작 옵션 — 원본 Design Canvas의 props에 대응합니다.
 const CONFIG = {
-  // 숙련도 막대는 객관적 근거가 없어 꺼 두었습니다.
-  // 켜려면 true로 바꾸고 아래 SKILLS의 pct 값을 직접 조정하세요.
-  showSkillBars: false,
+  // 숙련도 막대 표시. 막대 길이는 SKILLS의 pct 값입니다.
+  showSkillBars: true,
   revealOnScroll: true   // 스크롤 시 섹션 등장 애니메이션
 };
 
 // 분류는 이력서의 스킬 구분을 그대로 따릅니다.
+// pct는 막대 길이(0~100)입니다. 화면에 숫자로 나오지는 않습니다.
 const SKILLS = [
   { name: 'Java', cat: 'lang', pct: 90, note: '주력' },
+  { name: 'Node.js', cat: 'backend', pct: 80, note: '' },
+  { name: 'TypeScript', cat: 'lang', pct: 70, note: '주력' },
   { name: 'Kotlin', cat: 'lang', pct: 65, note: '' },
-  { name: 'JavaScript', cat: 'lang', pct: 85, note: '데이터 수집' },
-  { name: 'TypeScript', cat: 'lang', pct: 70, note: '실무 도입' },
 
   { name: 'Spring Boot', cat: 'backend', pct: 90, note: '주력' },
-  { name: 'Spring Framework', cat: 'backend', pct: 85, note: '레거시 운영 · 리팩터링' },
-  { name: 'JPA', cat: 'backend', pct: 75, note: '데이터 접근' },
-  { name: 'Nest.js', cat: 'backend', pct: 70, note: '실무 도입' },
-  { name: 'Node.js', cat: 'backend', pct: 90, note: 'Puppeteer 데이터 수집' },
+  { name: 'Nest.js', cat: 'backend', pct: 70, note: '실무 경험'},
+  { name: 'Vue.js', cat: 'frontend', pct: 60, note: '실무 경험' },
+  { name: 'Spring JPA', cat: 'backend', pct: 90, note: '데이터 접근' },
+  { name: 'Mybatis', cat: 'backend', pct: 90, note: '데이터 접근' },
 
-  { name: 'Vue.js', cat: 'frontend', pct: 60, note: '' },
-  { name: 'HTML', cat: 'frontend', pct: 70, note: '' },
 
-  { name: 'Oracle', cat: 'database', pct: 75, note: '' },
-  { name: 'MySQL', cat: 'database', pct: 80, note: '' },
+  { name: 'MySQL', cat: 'database', pct: 80, note: '성능 튜닝' },
+  { name: 'MSSQL', cat: 'database', pct: 80, note: '성능 튜닝' },
   { name: 'Redis', cat: 'database', pct: 70, note: '세션 캐시' },
 
   { name: 'Microsoft Azure', cat: 'devops', pct: 65, note: '' },
   { name: 'AKS (Kubernetes)', cat: 'devops', pct: 65, note: '배포 환경' },
   { name: 'Prometheus · Grafana · Loki', cat: 'devops', pct: 75, note: '모니터링 · 로그 수집' },
-  { name: 'CI/CD', cat: 'devops', pct: 75, note: '무중단 자동 배포' },
 
-  { name: 'Git · GitHub', cat: 'tools', pct: 85, note: '형상 관리' }
 ];
 
 const CATEGORIES = [
@@ -148,8 +144,8 @@ const WORK_PROJECTS = [
 
 // 경력은 기간 · 직무 · 회사만 표시합니다. (상세 내용은 프로젝트 섹션에서)
 const JOBS = [
-  { period: '2023.10 – 현재',      role: '백엔드 개발 · 인프라 운영',   company: '세이프디 (2년 10개월)' },
-  { period: '2020.02 – 2023.07',   role: '백엔드 개발',                 company: '(주)트레드링스 (3년 6개월)' },
-  { period: '2019.04 – 2020.02',   role: 'EAI 시스템 개발 · 운영',      company: '(주)이포즌 (11개월)' },
-  { period: '2017.08 – 2019.02',   role: '프로젝트 모듈 개발',          company: '(주)이나우테크놀로지 (1년 7개월)' }
+  { period: '2023.10 – 현재',      role: '백엔드 개발 · 인프라 운영',   company: '세이프디' },
+  { period: '2020.02 – 2023.07',   role: '백엔드 개발',                 company: '(주)트레드링스' },
+  { period: '2019.04 – 2020.02',   role: 'EAI 시스템 개발 · 운영',      company: '(주)이포즌' },
+  { period: '2017.08 – 2019.02',   role: '프로젝트 모듈 개발',          company: '(주)이나우테크놀로지' }
 ];
