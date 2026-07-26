@@ -13,3 +13,6 @@
 # OS 생성 파일
 .DS_Store
 Thumbs.db
+
+# 이력서 원문 (개인정보 포함 — 저장소에 올리지 않음)
+/RESUME.md
