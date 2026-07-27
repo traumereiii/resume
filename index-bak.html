@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;900&family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
 <!-- ?v= 값은 캐시 무효화용입니다. css/js를 고쳤는데 화면에 반영되지 않으면 숫자를 올리세요. -->
-<link rel="stylesheet" href="./css/style.css?v=16">
+<link rel="stylesheet" href="./css/style.css?v=12">
 <!-- 스크립트가 동작할 때만 등장 애니메이션의 초기 상태를 적용해 깜빡임을 막습니다. -->
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -46,24 +46,23 @@
   </div>
 </header>
 
-<!-- 경력 · 프로젝트 · 기술 스택 — 좌측 세로 탭으로 전환합니다.
-     탭 목록과 순서, 표시 여부는 data.js의 TABS에서 관리합니다.
-     탭 버튼과 패널은 스크립트가 그리므로 여기에는 자리만 둡니다.
-     활성 탭의 theme에 따라 섹션 배색이 바뀝니다(blue=파랑 / cream=밝은 배경). -->
-<section class="tabs is-blue" data-tabs>
+<!-- 경력 — 각 경력 아래에 해당 회사에서 진행한 프로젝트가 함께 표시됩니다. -->
+<section id="experience" class="experience">
   <div class="section grid" data-reveal>
-    <div class="tabs__aside">
-      <div class="tablist" role="tablist" aria-orientation="vertical"
-           aria-label="이력 상세" data-list="tabs"></div>
+    <h2 class="eyebrow eyebrow--invert">경력</h2>
+    <div class="jobs" data-list="jobs"></div>
+  </div>
+</section>
 
-      <!-- 카테고리 필터는 기술 스택(content: 'skills') 탭에서만 보입니다. -->
-      <div class="tabs__extra" data-tab-extra="skills" hidden>
-        <div class="chips" data-list="categories"></div>
-        <p class="note note--invertable">이력서에 기재한 기술과 실무에서 사용한 기술입니다.</p>
-      </div>
+<!-- 기술 스택 -->
+<section id="skills" class="section section--last" data-reveal>
+  <div class="grid">
+    <div class="skills__aside">
+      <h2 class="eyebrow">기술 스택</h2>
+      <div class="chips" data-list="categories"></div>
+      <p class="note">이력서에 기재한 기술과 실무에서 사용한 기술입니다.</p>
     </div>
-
-    <div class="tabs__panels" data-list="panels"></div>
+    <div class="skills" data-list="skills"></div>
   </div>
 </section>
 
@@ -72,7 +71,7 @@
   <a href="mailto:sds901234@naver.com">sds901234@naver.com</a>
 </footer>
 
-<script src="./js/data.js?v=16"></script>
-<script src="./js/app.js?v=16"></script>
+<script src="./js/data.js?v=12"></script>
+<script src="./js/app.js?v=12"></script>
 </body>
 </html>

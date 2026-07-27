@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="예시 스크린샷 2">
+  <rect width="1600" height="1000" fill="#FDEDE2"/>
+  <rect x="60" y="60" width="1480" height="880" fill="none" stroke="#1B2ED6" stroke-width="6" stroke-dasharray="24 18"/>
+  <text x="800" y="470" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-size="150" font-weight="800" fill="#1B2ED6">02</text>
+  <text x="800" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="46" fill="#14173A" fill-opacity="0.6">예시 스크린샷 · 실제 이미지로 교체하세요</text>
+</svg>

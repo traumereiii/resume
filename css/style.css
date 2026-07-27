@@ -25,6 +25,7 @@
   --cream-75: rgba(253, 237, 226, 0.75);
   --cream-70: rgba(253, 237, 226, 0.7);
   --cream-28: rgba(253, 237, 226, 0.28);
+  --cream-12: rgba(253, 237, 226, 0.12);
 
   --shell: 1080px;   /* 콘텐츠 최대 폭 */
   --aside: 300px;    /* 좌측 컬럼 폭 */
@@ -33,6 +34,9 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+
+/* display를 지정한 요소에도 hidden 속성이 우선하도록 합니다. */
+[hidden] { display: none !important; }
 
 body {
   margin: 0;
@@ -50,6 +54,17 @@ input, textarea, button { font-family: inherit; }
 
 img { max-width: 100%; }
 
+/* 화면에는 보이지 않지만 스크린리더에는 읽히는 텍스트 */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* 상단 고정 바 */
 .topbar {
   position: fixed;
@@ -66,7 +81,6 @@ img { max-width: 100%; }
   margin: 0 auto;
   padding: 84px var(--pad-x);
 }
-.section--tight { padding-top: 20px; padding-bottom: 72px; }
 .section--last { padding-bottom: 96px; }
 
 .grid {
@@ -145,12 +159,6 @@ img { max-width: 100%; }
   height: 100%;
   object-fit: cover;
   object-position: center top;
-}
-
-/* 이미지 슬롯은 항상 자리 전체를 채웁니다. */
-.modal__shot > image-slot {
-  position: absolute;
-  inset: 0;
 }
 
 /* 연락처 — 사진 바로 아래에 오므로 구분선이 사진 그림자(아래로 14px)에
@@ -246,13 +254,13 @@ img { max-width: 100%; }
 .jobs {
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 34px;
 }
 .job {
   display: grid;
   grid-template-columns: 140px 1fr;
   gap: 28px;
-  padding-bottom: 22px;
+  padding-bottom: 30px;
   border-bottom: 1px solid var(--cream-28);
 }
 .job__period {
@@ -267,15 +275,638 @@ img { max-width: 100%; }
   flex-direction: column;
   gap: 4px;
 }
-.job__role {
+/* 회사명이 제목, 그 아래가 담당 직무입니다. */
+.job__company {
   font-size: 21px;
   font-weight: 700;
   color: var(--cream);
 }
-.job__company {
+.job__role {
   font-size: 15px;
-  font-style: italic;
   color: var(--cream-70);
+}
+
+/* ---------- 프로젝트 목록 ----------
+   제목 줄을 누르면 본문이 접히고 펼쳐집니다.
+   묶음(.projects-group)마다 '모두 펼치기 / 모두 접기' 버튼을 둡니다.
+   경력 항목 안에서도, 프로젝트 탭에서도 같은 마크업을 씁니다. */
+
+/* 프로젝트 개수 + 전체 펼치기 버튼 줄 */
+.projects__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+}
+.projects__count {
+  font-family: Archivo, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-70);
+}
+.projects__toggle-all {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--cream);
+  border: 2px solid var(--cream-28);
+  transition: border-color 150ms, background-color 150ms;
+}
+.projects__toggle-all:hover {
+  border-color: var(--cream-70);
+  background: var(--cream-12);
+}
+
+.projects {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project {
+  background: var(--cream-12);
+  border-left: 3px solid var(--cream-28);
+  transition: border-color 200ms;
+}
+.project.is-open { border-left-color: var(--cream-70); }
+
+/* 제목 줄 전체가 토글 버튼입니다. h3는 목차 구조만 담당합니다. */
+.project__title { margin: 0; }
+
+.project__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 20px;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.project__toggle:hover .project__name { text-decoration: underline; }
+.project__toggle:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: -3px;
+}
+
+/* 제목 길이에 따라 줄바꿈이 들쭉날쭉해지지 않도록 기간을 제목 위에 둡니다. */
+.project__label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.project__name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cream);
+}
+.project__period {
+  font-family: Archivo, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--cream-75);
+}
+
+/* 펼침 상태를 나타내는 화살표 */
+.project__chevron {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-right: 3px;
+  border-right: 2px solid var(--cream-75);
+  border-bottom: 2px solid var(--cream-75);
+  transform: rotate(45deg);
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.project.is-open .project__chevron { transform: rotate(-135deg); }
+
+/* 접힘/펼침 — grid 행 높이(0fr↔1fr)를 애니메이션하고,
+   접힌 동안에는 visibility로 초점·스크린리더 대상에서도 빼놓습니다. */
+.project__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 240ms cubic-bezier(0.2, 0.8, 0.2, 1), visibility 240ms;
+}
+.project.is-open .project__body {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+.project__inner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 20px 18px;
+}
+
+.project__summary {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--cream-90);
+  text-wrap: pretty;
+}
+
+.project__results {
+  margin: 0;
+  padding-left: 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--cream-75);
+}
+.project__results li::marker { color: var(--cream-70); }
+
+.project__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.project__link { color: var(--cream); text-decoration: underline; }
+.project__link:hover { color: var(--cream); opacity: 0.75; }
+
+.project__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 2px;
+}
+
+/* 데이터가 비어 있는 탭 */
+.empty {
+  margin: 0;
+  font-size: 15px;
+  color: var(--tab-fg, var(--ink));
+  opacity: 0.6;
+}
+
+/* ---------- 개인 프로젝트 카드 ----------
+   밝은 배경(theme: 'cream') 위에 놓이는 카드입니다.
+   카드를 누르면 상세 모달이 열립니다. */
+
+.cards {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 22px;
+}
+.card { display: flex; }
+
+.card__button {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: transparent;
+  border: 2px solid var(--blue-25);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms, transform 160ms, box-shadow 160ms;
+}
+/* 프로필 사진의 어긋난 파란 블록과 같은 결의 hover 효과입니다. */
+.card__button:hover {
+  border-color: var(--blue);
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 var(--blue);
+}
+.card__button:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.card__thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: var(--lavender);
+  overflow: hidden;
+}
+.card__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card__thumb.is-broken img { display: none; }
+
+.card__thumb-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Archivo, sans-serif;
+  font-weight: 800;
+  font-size: 44px;
+  color: var(--blue-35);
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px 12px;
+}
+.card__period {
+  font-family: Archivo, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-50);
+}
+.card__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.card__summary {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-75);
+}
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 2px;
+}
+.card__more {
+  margin-top: auto;
+  padding: 0 18px 16px;
+  font-family: Archivo, sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+/* ---------- 프로젝트 상세 모달 ---------- */
+
+body.is-locked { overflow: hidden; }
+
+.modal {
+  width: min(880px, 92vw);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+.modal::backdrop { background: rgba(20, 23, 58, 0.62); }
+
+/* 테두리 없이 그림자로만 띄웁니다. */
+.modal__inner {
+  position: relative;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: var(--cream);
+  box-shadow: 0 28px 68px rgba(20, 23, 58, 0.34);
+}
+
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  cursor: pointer;
+  background: var(--cream-90);
+  border: 0;
+  color: var(--ink-60);
+  font-size: 14px;
+  transition: background-color 150ms, color 150ms;
+}
+.modal__close:hover {
+  background: var(--blue);
+  color: var(--cream);
+}
+
+/* 스크린샷 — 여러 장이면 좌우 버튼 · 점 · 키보드(←→)로 넘깁니다. */
+.shots {
+  background: var(--lavender);
+  border-bottom: 1px solid var(--blue-25);
+}
+/* 세로로 긴 화면에서도 설명이 함께 보이도록 스크린샷 높이를 제한합니다.
+   width를 명시하지 않으면 max-height에 맞춰 가로 폭까지 함께 줄어듭니다. */
+.shots__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 46vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+/* 프레임을 꽉 채우되 비율은 유지합니다. (absolute라 항상 가운데에 놓입니다) */
+.shots__img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.shots__frame.is-broken .shots__img { display: none; }
+.shots__frame.is-broken::after {
+  content: '스크린샷을 불러오지 못했습니다';
+  font-size: 13px;
+  color: var(--ink-50);
+}
+
+.shots__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+  background: var(--cream-90);
+  border: 2px solid var(--blue-25);
+  color: var(--blue);
+  font-size: 20px;
+  line-height: 1;
+  transition: background-color 150ms, color 150ms;
+}
+.shots__nav:hover { background: var(--blue); color: var(--cream); }
+.shots__nav--prev { left: 12px; }
+.shots__nav--next { right: 12px; }
+
+.shots__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--blue-25);
+}
+.shots__dots { display: flex; gap: 8px; }
+.shots__dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 2px solid var(--blue-35);
+  transition: background-color 150ms, border-color 150ms;
+}
+.shots__dot[aria-current="true"] {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.shots__counter {
+  font-family: Archivo, sans-serif;
+  font-size: 12px;
+  color: var(--ink-50);
+}
+
+/* 스크린샷이 한 장뿐이면 넘길 것이 없습니다. */
+.shots.is-single .shots__nav,
+.shots.is-single .shots__bar { display: none; }
+
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 26px 28px 28px;
+}
+.modal__period {
+  margin: 0;
+  font-family: Archivo, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-50);
+}
+.modal__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.modal__desc {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink-85);
+  text-wrap: pretty;
+}
+.modal__results {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-80);
+}
+.modal__results li::marker { color: var(--blue-35); }
+.modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.modal__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 4px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.modal__link { color: var(--blue); text-decoration: underline; }
+.modal__link:hover { color: var(--blue-dark); }
+
+/* 스크린샷이 없으면 닫기 버튼이 제목 줄과 같은 높이에 오므로 자리를 비워 둡니다. */
+.modal:not(.has-shots) .modal__period,
+.modal:not(.has-shots) .modal__title { padding-right: 48px; }
+
+/* ---------- 경력 · 기술 스택 탭 (index.html) ----------
+   좌측 컬럼에 세로 탭, 우측에 패널을 둡니다.
+   경력 패널은 파란 배경 위에서 쓰도록 만들어진 스타일이라,
+   활성 탭에 따라 섹션 배색 전체를 바꿔 기존 스타일을 그대로 재사용합니다. */
+
+.tabs {
+  /* 기본값 = theme: 'cream' (밝은 배경) */
+  --tab-bg: var(--cream);
+  --tab-fg: var(--ink);
+  --tab-accent: var(--blue);
+  --tab-line: var(--blue-25);
+
+  background: var(--tab-bg);
+  color: var(--tab-fg);
+  transition: background-color 320ms ease, color 320ms ease;
+}
+/* theme: 'blue' 인 탭 = 파란 배경 (경력 · 프로젝트) */
+.tabs.is-blue {
+  --tab-bg: var(--blue);
+  --tab-fg: var(--cream);
+  --tab-accent: var(--cream);
+  --tab-line: var(--cream-28);
+}
+
+.tabs__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-self: start;
+  position: sticky;
+  top: 34px;
+}
+
+.tablist {
+  display: flex;
+  flex-direction: column;
+}
+
+.tab {
+  cursor: pointer;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-top: 3px solid var(--tab-line);
+  padding: 14px 0 18px;
+  text-align: left;
+  font-family: Archivo, sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tab-fg);
+  opacity: 0.5;
+  transition: opacity 180ms, border-color 180ms;
+}
+.tab:hover { opacity: 0.8; }
+.tab[aria-selected="true"] {
+  opacity: 1;
+  border-top-color: var(--tab-accent);
+  color: var(--tab-accent);
+}
+.tab:focus-visible {
+  outline: 2px solid var(--tab-accent);
+  outline-offset: 3px;
+}
+
+/* 탭 이름 옆 화살표 — 활성 탭에서만 보입니다. */
+.tab::after {
+  content: '→';
+  font-size: 14px;
+  letter-spacing: 0;
+  margin-left: 8px;
+  opacity: 0;
+  transition: opacity 180ms;
+}
+.tab[aria-selected="true"]::after { opacity: 1; }
+
+.tabs__extra {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+/* 배경색이 바뀌는 영역이라 보조 문구 색도 함께 따라갑니다. */
+.note--invertable { color: var(--tab-fg); opacity: 0.6; }
+
+/* 패널 제목 — 화면에서는 탭 이름이 제목 역할을 하므로 숨기고,
+   인쇄할 때는 두 패널이 나란히 나오므로 제목을 드러냅니다. */
+.tabpanel__title {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.tabpanel { animation: tab-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.tabpanel:focus { outline: none; }
+.tabpanel:focus-visible { outline: 2px solid var(--tab-accent); outline-offset: 6px; }
+
+@keyframes tab-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- 학력 · 자격증 ----------
+   밝은 배경(theme: 'cream') 위에 놓이는 목록입니다. */
+
+.records {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.records__title {
+  margin: 0 0 18px;
+  padding-top: 12px;
+  border-top: 3px solid var(--blue-25);
+  font-family: Archivo, sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.records__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.record {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--blue-25);
+}
+.record:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.record__period {
+  font-family: Archivo, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink-50);
+  padding-top: 3px;
+}
+.record__body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.record__name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.record__sub {
+  font-size: 14px;
+  color: var(--ink-60);
 }
 
 /* ---------- 기술 스택 ---------- */
@@ -354,74 +985,8 @@ img { max-width: 100%; }
   transition: width 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* ---------- 프로젝트 카드 ---------- */
+/* ---------- 기술 태그 (모달) ---------- */
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.card {
-  text-align: left;
-  background: transparent;
-  border: 2px solid var(--blue-35);
-  padding: 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  cursor: pointer;
-  color: inherit;
-  transition: background 160ms, border-color 160ms;
-}
-.card:hover,
-.card:focus-visible {
-  border-color: var(--blue);
-  background: rgba(27, 46, 214, 0.06);
-}
-
-.card__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.card__year,
-.card__arrow {
-  font-family: Archivo, sans-serif;
-  color: var(--blue);
-}
-.card__year { font-size: 12px; letter-spacing: 0.1em; }
-.card__arrow { font-size: 18px; }
-
-.card__heading {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.card__title {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--ink);
-}
-.card__period {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ink-60);
-}
-.card__summary {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--ink-75);
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding-top: 4px;
-}
 .tag {
   font-size: 12px;
   font-weight: 700;
@@ -451,165 +1016,6 @@ img { max-width: 100%; }
   font-size: 14px;
 }
 
-/* ---------- 프로젝트 상세 모달 ---------- */
-
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  background: rgba(20, 23, 58, 0.72);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-}
-.modal[hidden] { display: none; }
-
-.modal__panel {
-  background: var(--cream);
-  max-width: 720px;
-  width: 100%;
-  max-height: 84vh;
-  overflow: auto;
-  border: 3px solid var(--blue);
-  padding: 40px;
-}
-
-.modal__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
-}
-.modal__head .block { gap: 8px; }
-.modal__kicker {
-  font-family: Archivo, sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--blue);
-}
-.modal__title {
-  margin: 0;
-  font-size: 30px;
-  font-weight: 800;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-}
-.modal__close {
-  background: var(--blue);
-  color: var(--cream);
-  border: none;
-  width: 38px;
-  height: 38px;
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.modal__close:hover { background: var(--blue-dark); }
-
-.modal__rule {
-  height: 2px;
-  background: var(--blue);
-  margin: 24px 0;
-}
-.modal__body {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-.modal__shot {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: var(--lavender);
-  border: 1px solid var(--blue-30);
-  overflow: hidden;
-}
-.modal__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 700;
-}
-.btn--solid {
-  background: var(--blue);
-  color: var(--cream);
-  padding: 11px 18px;
-}
-.btn--solid:hover { background: var(--blue-dark); color: var(--cream); }
-.btn--ghost {
-  border: 2px solid var(--blue);
-  color: var(--blue);
-  padding: 9px 16px;
-}
-.btn--ghost:hover { background: rgba(27, 46, 214, 0.08); color: var(--blue); }
-.btn__icon { font-family: Archivo, sans-serif; }
-
-.modal__detail {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.75;
-  color: var(--ink-85);
-}
-
-.block {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.block__label {
-  font-family: Archivo, sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--blue);
-}
-
-.docs {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-.doc {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 14px;
-  background: var(--lavender);
-  color: var(--ink);
-  font-size: 14px;
-  font-weight: 700;
-}
-.doc:hover { background: var(--blue); color: var(--cream); }
-.doc__icon { font-family: Archivo, sans-serif; }
-
-.results {
-  margin: 0;
-  padding-left: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--ink-85);
-}
-
-.modal__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.modal__tags .tag { padding: 5px 10px; }
-
 /* ---------- 스크롤 등장 애니메이션 ----------
    .js 클래스는 <head>의 인라인 스크립트가 붙입니다.
    스크립트가 없으면 초기 숨김 상태 자체가 적용되지 않습니다. */
@@ -627,6 +1033,65 @@ img { max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
   .skill__bar { transition: none; }
+  .project__body,
+  .project__chevron { transition: none; }
+  .tabs { transition: none; }
+  .tabpanel { animation: none; }
+  .card__button { transition: none; }
+  .card__button:hover { transform: none; }
+}
+
+/* ---------- 인쇄 (PDF 저장) ----------
+   접힌 프로젝트도 내용이 모두 나오도록 펼친 상태로 고정합니다. */
+
+@media print {
+  .project__body {
+    grid-template-rows: 1fr !important;
+    visibility: visible !important;
+  }
+  .project__chevron,
+  .projects__toggle-all { display: none; }
+
+  /* 탭 레이아웃(index.html)은 두 패널을 위아래로 모두 펼칩니다. */
+  .tabs {
+    background: var(--cream) !important;
+    color: var(--ink) !important;
+    --tab-fg: var(--ink);
+    --tab-accent: var(--blue);
+  }
+  /* 탭 조작 영역은 종이에서 쓸 수 없으니 빼고, 본문을 한 컬럼으로 넓게 씁니다. */
+  .tabs__aside { display: none; }
+  .tabs .grid { grid-template-columns: 1fr; }
+
+  /* 숨겨 두었던 패널 제목을 인쇄용 소제목으로 되살립니다. */
+  .tabpanel__title {
+    position: static;
+    width: auto; height: auto;
+    margin: 0 0 18px;
+    overflow: visible;
+    clip-path: none;
+    font-family: Archivo, sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .tabpanel[hidden] { display: block !important; }
+  .modal { display: none !important; }
+  .tabpanel { animation: none; }
+  .tabs__panels {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  /* 경력 패널은 파란 배경 전용 스타일이라 배경을 함께 인쇄합니다. */
+  [data-panel="experience"] {
+    background: var(--blue);
+    color: var(--cream);
+    padding: 28px 24px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
 
 /* ---------- 반응형 ----------
@@ -649,7 +1114,11 @@ img { max-width: 100%; }
   .about { padding-top: 24px; }
 
   .about__grid { grid-template-columns: 1fr; }
-  .cards { grid-template-columns: 1fr; }
+
+  /* 1컬럼이 되면 세로 탭을 가로 탭으로 바꿉니다. */
+  .tabs__aside { position: static; }
+  .tablist { flex-direction: row; gap: 20px; }
+  .tab { padding: 12px 0 14px; }
 }
 
 @media (max-width: 560px) {
@@ -659,12 +1128,20 @@ img { max-width: 100%; }
   .name__role { font-size: 19px; }
   .lede { font-size: 16px; }
 
-  .job {
+  .job,
+  .record {
     grid-template-columns: 1fr;
     gap: 12px;
   }
 
-  .modal { padding: 16px; }
-  .modal__panel { padding: 24px; max-height: 90vh; }
-  .modal__title { font-size: 24px; }
+  .project__toggle { padding: 14px 16px; }
+  .project__inner { padding: 0 16px 16px; }
+
+  .cards { grid-template-columns: 1fr; gap: 18px; }
+  .modal { width: 94vw; }
+  .modal__body { padding: 20px 20px 24px; }
+  .modal__title { font-size: 21px; }
+  .shots__nav { width: 34px; height: 34px; font-size: 17px; }
+  .shots__nav--prev { left: 8px; }
+  .shots__nav--next { right: 8px; }
 }
